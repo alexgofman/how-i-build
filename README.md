@@ -6,11 +6,7 @@ I'm [Alex Gofman](https://github.com/alexgofman), a Unity and mobile developer i
 
 ## The flow
 
-```mermaid
-flowchart LR
-    A[Idea] --> B[Brainstorm] --> C[Spec] --> D[Plan] --> E[Build] --> F[Review] --> G[Test + ship] --> H[Watch + learn]
-    H -.-> B
-```
+**Idea → Brainstorm → Spec → Plan → Build → Review → Test and ship → Watch and learn**, then back to Brainstorm for the next feature.
 
 | Step | What happens | Skills and tools | What it leaves behind |
 |---|---|---|---|
