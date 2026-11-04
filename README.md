@@ -37,14 +37,32 @@ Every project starts with a `CLAUDE.md` rulebook before the first line of code (
 - **Obsidian is the shared memory.** It holds an agent guide, a rules file per project, decisions and a daily session journal. Each session starts by reading it and ends by writing to it.
 - **Models:** Claude Fable 5.1 to plan and to pull results together, Claude Opus 5.5 for parallel agent work, and the Claude API inside products.
 
-## Where this flow has shipped
+## Where I've used this flow
 
-| Project | What the flow did |
+| Project | Type | What the flow did |
+|---|---|---|
+| [Northeld: Idle Castle RPG](https://apps.apple.com/app/id1525862814) | Game | From a blank project to the App Store and Google Play in about three months, solo, with 16 languages at launch. Claude Code worked under a project rulebook (now about 800 lines) with the Unity Editor connected through MCP. |
+| [Dog to Wag](#app-example-dog-to-wag) | App | An AI coach for owners of reactive dogs, built with React Native. It went from the first spec to a build on an iPhone in three days. [Details below.](#app-example-dog-to-wag) |
+| Localisation of two live games | Games | About 1,560 agents worked behind automated QA gates that check placeholders, length limits and missing keys. 16 languages are now live in both games, and 100 store listings (39 App Store + 61 Google Play locales) were written and pushed through the store APIs. |
+| Store-analytics agents | Tooling | The spec and plans were written with superpowers, and 60+ automated tests back them. Two agents run in production: every morning they pull App Store Connect and Firebase data, apply anomaly rules and send a Claude-written digest to Telegram. |
+| Game art pipeline | Games | AI-generated icons are chroma-keyed and turned into Unity assets through MCP, with no manual imports. |
+
+## App example: Dog to Wag
+
+Dog to Wag is a subscription app, not a game, that coaches owners of reactive dogs. It went through the same flow, with a React Native stack instead of Unity. The first spec was written on 24 September 2026, and a build was installed on an iPhone on 26 September.
+
+**Stack:** Expo SDK 57 · React Native 0.86 · TypeScript (strict) · Expo Router · on-device SQLite · Reanimated · RevenueCat for subscriptions · Supabase (anonymous auth and an Edge Function) · Claude API · Sentry · PostHog · Jest and Testing Library · GitHub Actions
+
+| Step | What happened |
 |---|---|
-| [Northeld: Idle Castle RPG](https://apps.apple.com/app/id1525862814) | From a blank project to the App Store and Google Play in about three months, solo, with 16 languages at launch. Claude Code worked under a project rulebook (now about 800 lines) with the Unity Editor connected through MCP. |
-| Localisation of two live games | About 1,560 agents worked behind automated QA gates that check placeholders, length limits and missing keys. 16 languages are now live in both games, and 100 store listings (39 App Store + 61 Google Play locales) were written and pushed through the store APIs. |
-| Store-analytics agents | The spec and plans were written with superpowers, and 60+ automated tests back them. Two agents run in production: every morning they pull App Store Connect and Firebase data, apply anomaly rules and send a Claude-written digest to Telegram. |
-| Game art pipeline | AI-generated icons are chroma-keyed and turned into Unity assets through MCP, with no manual imports. |
+| **Brainstorm** | I ranked 29 problem niches, and a coach for reactive dogs came out on top. Every API, price and store policy the app depends on got its own research note, each with a section that checks its facts independently. |
+| **Spec** | Three rounds of adversarial review took the spec to version 3.1. Its core rule: a fixed, deterministic safety engine decides each training step, and the AI only explains. The AI can never override the engine. |
+| **Plan** | The first master plan had 7 phases and 64 tasks, tracked in Jira with sprints and story points. I then cut it to a lean v1, because speed to launch mattered more. |
+| **Design** | A design system and key-screen mockups in Claude Design. The mascot and the app icon are based on my own dog. |
+| **Build** | Subagent-driven development with tests first: 54 commits in two days. A multi-agent workflow built the interface. It built the app logic and UI kit first, then five screen agents built the screens, and a final pass wired everything together. |
+| **Review** | Review agents checked the engine from several angles. Every gap they found was settled on the cautious side and logged for my approval, 26 changes in all. |
+| **Test** | 904 tests, plus a property fuzzer that simulated about 1.7 million dog-days without breaking a single safety rule. CI is green on GitHub Actions. |
+| **Result** | The app had onboarding, a paywall, a daily plan with streaks, a walk mode and an AI-written weekly check-in (Claude, through a Supabase function, with a template fallback). It ran on a real iPhone. I stopped it before launch: the risk of injuries (dog bites, dogs near traffic) was a liability I chose not to carry. The code is kept as a reusable app shell. |
 
 ## Templates
 
