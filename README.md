@@ -42,6 +42,7 @@ Every project starts with a `CLAUDE.md` rulebook before the first line of code (
 | Project | Type | What the flow did |
 |---|---|---|
 | [Northeld: Idle Castle RPG](https://apps.apple.com/app/id1525862814) | Game | From a blank project to the App Store and Google Play in about three months, solo, with 16 languages at launch. Claude Code worked under a project rulebook (now about 800 lines) with the Unity Editor connected through MCP. |
+| [FixThenShip](https://github.com/alexgofman/fixthenship) | Web product | A check for AI-built iPhone apps before they go to Apple's App Store, built in one day at a London hackathon. The design was written the day before, and the first complete run on a real app finished 94 minutes after the start. [Details below.](#web-product-example-fixthenship) |
 | [Dog to Wag](#app-example-dog-to-wag) | App | An AI coach for owners of reactive dogs, built with React Native. It went from the first spec to a build on an iPhone in three days. [Details below.](#app-example-dog-to-wag) |
 | Localisation of two live games | Games | About 1,560 agents worked behind automated QA gates that check placeholders, length limits and missing keys. 16 languages are now live in both games, and 100 store listings (39 App Store + 61 Google Play locales) were written and pushed through the store APIs. |
 | Store-analytics agents | Tooling | The spec and plans were written with superpowers, and 60+ automated tests back them. Two agents run in production: every morning they pull App Store Connect and Firebase data, apply anomaly rules and send a Claude-written digest to Telegram. |
@@ -63,6 +64,22 @@ Dog to Wag is a subscription app, not a game, that coaches owners of reactive do
 | **Review** | Review agents checked the engine from several angles. Every gap they found was settled on the cautious side and logged for my approval, 26 changes in all. |
 | **Test** | 904 tests, plus a property fuzzer that simulated about 1.7 million dog-days without breaking a single safety rule. CI is green on GitHub Actions. |
 | **Result** | The app had onboarding, a paywall, a daily plan with streaks, a walk mode and an AI-written weekly check-in (Claude, through a Supabase function, with a template fallback). It ran on a real iPhone. I stopped it before launch: the risk of injuries (dog bites, dogs near traffic) was a liability I chose not to carry. The code is kept as a reusable app shell. |
+
+## Web product example: FixThenShip
+
+[FixThenShip](https://github.com/alexgofman/fixthenship) gets an AI-built iPhone app ready for Apple's App Store. It uses the app's web version the way Apple's reviewer would, has coding agents fix what it finds, and checks again. It is a web product, not a game, and it went through the same flow in two days: the design and the plan on 13 November 2026, and all of the code on 14 November at Eurasian Hack London, where the rules asked for projects built with Devin. There is a [96-second demo](https://fixthenship.netlify.app/#watch).
+
+**Stack:** Next.js 16 · React 19 · TypeScript 5 · Node.js 24 · Vitest · the e2e test tool driving WebKit at iPhone size · Gemini as the model that judges each screen · the Devin API · the GitHub API · Netlify
+
+| Step | What happened |
+|---|---|
+| **Brainstorm** | Five research agents checked a shortlist of ideas for demand and competitors, and the key numbers were checked again on primary sources. Three ideas were dropped as crowded. I picked this one the day before the event. |
+| **Spec** | A written design. A fresh agent that saw only the design found ten gaps; seven were settled on the spot and three came to me. |
+| **Plan** | One-page briefs, each owning its own set of files, with shared names and data shapes agreed up front so that several agents could build at once. Four gates through the day, the last one for submitting. No code before 10:00. |
+| **Build** | Devin wrote the product: 28 build sessions, most of them started through its API, up to six at once on one branch. Claude Code wrote the briefs, reviewed every push and ran every check on a real app. The first complete run (review, seven fixes, merge, re-check) finished 94 minutes after the start. |
+| **Review** | Two independent reviews of the code, one by a Devin session on its strongest mode and one by a panel of Claude agents with a sceptic for each finding, confirmed 39 findings. Six sessions fixed them within the hour. |
+| **Test** | 375 tests. Code that passed the agent's own tests failed on a real app four times, so every check was run on a real app before it was trusted. Inside the product, its own re-check decides whether a fix worked, never the agent that wrote the fix. |
+| **Result** | On the sample app: 7 likely rejections found in about 3 minutes, 7 pull requests opened in about 5, and after the re-check 4 fixed and verified and 3 that need the developer. The website, a demo video and a deck shipped the same day. My part was the product: which problem, who it is for, and the calls on the day. |
 
 ## Templates
 
